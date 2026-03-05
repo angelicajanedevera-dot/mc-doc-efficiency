@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html>
+<head>
+    <title>MC Document Request Efficiency System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;}
+        body {background:#f5f7fa; min-height:100vh; color:#333;}
+
+        /* HEADER */
+        .header {background:linear-gradient(135deg,#2c5282,#3182ce); color:white; padding:1rem 0; box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+        .header-content {max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:1rem;}
+        .header-icon {width:50px;height:50px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+        .header-title {flex:1;}
+        .header h1 {font-size:1.5rem;font-weight:500;margin-bottom:0.25rem;}
+        .header-subtitle {font-size:0.9rem;opacity:0.9;}
+
+        /* NAVIGATION */
+        .nav-tabs {background:white;border-bottom:1px solid #e2e8f0;padding:0;}
+        .nav-content {max-width:1200px;margin:0 auto;display:flex;padding:0 2rem;}
+        .nav-tab {padding:1rem 1.5rem;background:none;border:none;cursor:pointer;font-size:0.95rem;font-weight:500;color:#64748b;border-bottom:3px solid transparent;transition:all 0.3s ease;}
+        .nav-tab:hover {color:#3182ce;background:#f8fafc;}
+        .nav-tab.active {color:#3182ce;border-bottom-color:#3182ce;background:#f8fafc;}
+
+        /* MAIN CONTENT */
+        .main-content {max-width:1200px;margin:0 auto;padding:2rem;display:none;}
+        .main-content.active {display:block;}
+        .page-header {margin-bottom:2rem;}
+        .page-title {font-size:1.75rem;font-weight:500;color:#1e293b;margin-bottom:0.5rem;}
+        .page-subtitle {color:#64748b;font-size:1rem;}
+
+        /* CARDS */
+        .card {background:white;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);margin-bottom:1.5rem;overflow:hidden;}
+        .card-header {padding:1.25rem 1.5rem;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:500;color:#1e293b;}
+        .card-body {padding:1.5rem;}
+
+        /* FORM CONTROLS - FIXED ALIGNMENT */
+        .form-group {margin-bottom:1.25rem;}
+        .form-label {display:block;margin-bottom:0.5rem;font-weight:500;color:#374151;font-size:0.9rem;}
+        
+        .form-control {
+            width:100%;
+            padding:0 0.75rem;
+            height:45px;
+            border:1px solid #d1d5db;
+            border-radius:8px;
+            font-size:0.95rem;
+            background-color: white;
+            transition:border-color 0.3s ease;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        input[type="date"].form-control, select.form-control {
+            line-height: 43px;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        textarea.form-control { height:auto; padding:0.75rem; resize:none; }
+        .form-control:focus {outline:none;border-color:#3182ce;box-shadow:0 0 0 3px rgba(49,130,206,0.1);}
+        
+        .form-row {
+            display:grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* BUTTONS */
+        .btn {padding:0.75rem 1.5rem;border:none;border-radius:8px;font-weight:500;cursor:pointer;transition:all 0.3s ease;font-size:0.95rem;text-decoration:none;display:inline-block;text-align:center;}
+        .btn-primary {background:#3182ce;color:white;}
+        .btn-secondary {background:#e2e8f0;color:#4a5568;}
+        .btn-outline {background:transparent;color:#3182ce;border:1px solid #3182ce;}
+        .btn-group {display:flex;gap:1rem;margin-top:1.5rem;}
+
+        /* LOGIN PAGE */
+        .login-container {min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2c5282 0%,#3182ce 100%);}
+        .login-card {width:100%;max-width:400px;background:white;padding:2rem;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.15);}
+
+        /* TABLES */
+        table {width:100%; border-collapse: collapse;}
+        th, td {padding: 12px; text-align: left; border-bottom: 1px solid #edf2f7;}
+        th {background: #f8fafc; color: #64748b; font-size: 0.85rem; text-transform: uppercase;}
+
+        @media (max-width:768px){
+            .form-row{grid-template-columns:1fr;}
+            .faq-grid{grid-template-columns: 1fr !important;}
+        }
+
+        .status-badge {padding:0.25rem 0.75rem;border-radius:20px;font-size:0.8rem;font-weight:500;}
+        .status-pending {background:#fef3c7;color:#d97706;}
+        .hidden{display:none;}
+    </style>
+</head>
+<body>
+
+<div id="loginPage">
+    <div class="login-container">
+        <div class="login-card">
+            <div style="text-align:center; margin-bottom:2rem;">
+                <h1 style="color:#3182ce; font-size:1.5rem;">Student Portal Login</h1>
+            </div>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <label class="form-label">Student Name</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter Full Name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="mainApp" class="hidden">
+    <div class="header">
+        <div class="header-content">
+            <div class="header-icon">📋</div>
+            <div class="header-title">
+                <h1>MC Document Request System</h1>
+                <div class="header-subtitle">Efficient Document Processing</div>
+            </div>
+            <button class="btn btn-outline" style="color:white; border-color:white;" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-content">
+            <button class="nav-tab active" onclick="showTab('dashboard', event)">Home</button>
+            <button class="nav-tab" onclick="showTab('request', event)">New Request</button>
+            <button class="nav-tab" onclick="showTab('status', event)">Track Status</button>
+            <button class="nav-tab" onclick="showTab('guidelines', event)">Guidelines & FAQ</button>
+        </div>
+    </div>
+
+    <div id="dashboard" class="main-content active">
+        <div class="page-header">
+            <h1 class="page-title">Welcome, Angelica Jane</h1>
+            <p class="page-subtitle">Welcome to your student portal.</p>
+        </div>
+        <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+            <div class="card" style="cursor:pointer; padding: 1.5rem; border-left: 4px solid #3182ce;" onclick="showTab('request', event)">
+                <h3>📄 New Request</h3>
+                <p style="color:#64748b;">Create a new document application.</p>
+            </div>
+            <div class="card" style="cursor:pointer; padding: 1.5rem; border-left: 4px solid #3182ce;" onclick="showTab('status', event)">
+                <h3>📊 Track Status</h3>
+                <p style="color:#64748b;">Monitor your request progress.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="request" class="main-content">
+        <div class="card">
+            <div class="card-header">Request Form</div>
+            <div class="card-body">
+                <form id="requestForm" onsubmit="submitRequest(event)">
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">Full Name</label><input type="text" name="fullName" class="form-control" required></div>
+                        <div class="form-group"><label class="form-label">Student ID</label><input type="text" name="studentId" class="form-control" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Document Type</label>
+                        <select name="docType" class="form-control" required>
+                            <option value="">Select Document</option>
+                            <option value="Transcript of Records">Transcript of Records (TOR)</option>
+                            <option value="Certificate of Enrollment">Certificate of Enrollment (COE)</option>
+                            <option value="Good Moral Certificate">Good Moral Certificate</option>
+                            <option value="Diploma">Diploma</option>
+                            <option value="Certificate of Grades">Certificate of Grades</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Preferred Date</label>
+                            <input type="date" name="preferredDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Payment Method</label>
+                            <select name="payment" class="form-control" required>
+                                <option value="">Select Payment</option>
+                                <option value="Cash">Cash</option>
+                                <option value="GCash">GCash</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="status" class="main-content">
+        <div class="card">
+            <div class="card-body">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Document</th><th>Submitted Date</th><th>Status</th></tr>
+                    </thead>
+                    <tbody id="statusTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="guidelines" class="main-content">
+        <div class="card">
+            <div class="card-header">Processing Time & Fees</div>
+            <div class="card-body" style="padding:0;">
+                <table>
+                    <thead>
+                        <tr><th>Document Type</th><th>Estimated Time</th><th>Fee</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Transcript of Records (TOR)</td><td>5-7 Working Days</td><td>₱250.00</td></tr>
+                        <tr><td>Certificate of Enrollment (COE)</td><td>2-3 Working Days</td><td>₱75.00</td></tr>
+                        <tr><td>Good Moral Certificate</td><td>3-5 Working Days</td><td>₱100.00</td></tr>
+                        <tr><td>Diploma</td><td>10-14 Working Days</td><td>₱500.00</td></tr>
+                        <tr><td>Certificate of Grades</td><td>2-3 Working Days</td><td>₱50.00</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">Frequently Asked Questions (FAQ)</div>
+            <div class="card-body faq-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div>
+                    <h4 style="color:#2c5282; margin-bottom:5px;">How many days can I get my document?</h4>
+                    <p style="color:#64748b; font-size: 0.9rem;">Processing varies per document. TOR takes 5-7 days, while COE takes 2-3 days. Please refer to the table above.</p>
+                </div>
+                <div>
+                    <h4 style="color:#2c5282; margin-bottom:5px;">Can I cancel my request?</h4>
+                    <p style="color:#64748b; font-size: 0.9rem;">Requests can only be cancelled within 1 hour after submission. Once the status is "Processing", cancellation is no longer allowed.</p>
+                </div>
+                <div>
+                    <h4 style="color:#2c5282; margin-bottom:5px;">Is there a rush processing?</h4>
+                    <p style="color:#64748b; font-size: 0.9rem;">Currently, rush processing is only available for Certificate of Enrollment for an additional fee of ₱50.00.</p>
+                </div>
+                <div>
+                    <h4 style="color:#2c5282; margin-bottom:5px;">Can I send someone to pick up my document?</h4>
+                    <p style="color:#64748b; font-size: 0.9rem;">Yes, provided they bring an authorization letter and a photocopy of your valid student ID.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentUser = null;
+let requests = JSON.parse(localStorage.getItem('requests') || '[]');
+
+function login(event){
+    event.preventDefault();
+    const user = document.getElementById('username').value;
+    if(user){
+        currentUser = user;
+        document.getElementById('loginPage').classList.add('hidden');
+        document.getElementById('mainApp').classList.remove('hidden');
+    }
+}
+
+function logout(){
+    currentUser = null;
+    document.getElementById('mainApp').classList.add('hidden');
+    document.getElementById('loginPage').classList.remove('hidden');
+}
+
+function showTab(tabName, event){
+    document.querySelectorAll('.main-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabName).classList.add('active');
+    if(event) event.currentTarget.classList.add('active');
+    if(tabName === 'status') loadStatusTable();
+}
+
+function submitRequest(event){
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const requestData = {
+        id: 'REQ-' + Math.floor(1000 + Math.random() * 9000),
+        docType: formData.get('docType'),
+        submittedDate: new Date().toLocaleDateString(),
+        status: 'pending',
+        submittedBy: currentUser
+    };
+    requests.push(requestData);
+    localStorage.setItem('requests', JSON.stringify(requests));
+    alert('Request Submitted!');
+    event.target.reset();
+    showTab('status');
+}
+
+function loadStatusTable(){
+    const tbody = document.getElementById('statusTableBody');
+    const userReq = requests.filter(r => r.submittedBy === currentUser);
+    tbody.innerHTML = userReq.map(r => `
+        <tr>
+            <td>${r.id}</td>
+            <td>${r.docType}</td>
+            <td>${r.submittedDate}</td>
+            <td><span class="status-badge status-pending">${r.status}</span></td>
+        </tr>
+    `).join('');
+}
+</script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
